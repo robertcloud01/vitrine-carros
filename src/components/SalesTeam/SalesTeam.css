@@ -1,0 +1,199 @@
+.sales-team {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  padding: 80px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sales-team-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.sales-team-title {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+  text-align: center;
+  background: linear-gradient(90deg, #b78628, #fcc201, #b78628);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sales-team-subtitle {
+  font-size: 1.3rem;
+  color: #aaa;
+  margin: 0 0 60px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.sales-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+
+.sales-card {
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.sales-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(252, 194, 1, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.sales-card:hover::before {
+  left: 100%;
+}
+
+.sales-image-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 25px;
+}
+
+.sales-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fcc201;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.sales-card:hover .sales-image {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(252, 194, 1, 0.3);
+}
+
+.whatsapp-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  background: #25d366;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.whatsapp-button:hover {
+  background: #128c7e;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  transform: scale(1.1);
+}
+
+.whatsapp-button i {
+  font-size: 26px;
+}
+
+.sales-info {
+  color: white;
+}
+
+.sales-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: #fcc201;
+  letter-spacing: 1px;
+}
+
+.sales-role {
+  font-size: 1rem;
+  color: #aaa;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sales-team {
+    padding: 60px 15px;
+  }
+  
+  .sales-team-title {
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+  }
+  
+  .sales-team-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+  
+  .sales-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .sales-card {
+    padding: 25px;
+  }
+  
+  .sales-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .whatsapp-button {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-team-title {
+    font-size: 1.8rem;
+  }
+  
+  .sales-image {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .sales-name {
+    font-size: 1.3rem;
+  }
+  
+  .sales-role {
+    font-size: 0.9rem;
+  }
+}
