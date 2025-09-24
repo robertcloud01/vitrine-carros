@@ -1,0 +1,346 @@
+/* ===== DESIGN MOBILE-FIRST ULTRA MODERNO 2024 ===== */
+
+/* Reset e configurações base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Configuração viewport e acessibilidade */
+html {
+  font-size: 100%; /* 16px base */
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  /* Tipografia fluida com clamp() - escala suavemente */
+  font-size: clamp(0.875rem, calc(0.8rem + 0.5vw), 1.125rem);
+  line-height: clamp(1.4, calc(1.3 + 0.2vw), 1.6);
+  
+  /* Prevenção de overflow horizontal */
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  
+  /* Performance e suavidade */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Container principal */
+.App {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ===== TIPOGRAFIA FLUIDA COM CLAMP() ===== */
+h1 {
+  font-size: clamp(1.75rem, calc(1.5rem + 2.5vw), 3.5rem);
+  line-height: clamp(1.1, calc(1.05 + 0.1vw), 1.2);
+  letter-spacing: clamp(-0.02em, calc(-0.01em + -0.5vw), -0.05em);
+}
+
+h2 {
+  font-size: clamp(1.5rem, calc(1.25rem + 2vw), 3rem);
+  line-height: clamp(1.15, calc(1.1 + 0.1vw), 1.25);
+}
+
+h3 {
+  font-size: clamp(1.25rem, calc(1.1rem + 1.5vw), 2.5rem);
+  line-height: clamp(1.2, calc(1.15 + 0.1vw), 1.3);
+}
+
+p {
+  font-size: clamp(0.875rem, calc(0.8rem + 0.5vw), 1.125rem);
+  line-height: clamp(1.4, calc(1.3 + 0.2vw), 1.6);
+  margin-bottom: clamp(0.75rem, calc(0.5rem + 1vw), 1.5rem);
+}
+
+/* ===== BREAKPOINTS MODERNOS 2024 ===== */
+
+/* Mobile pequeno (320px+) */
+@media screen and (min-width: 20rem) {
+  :root {
+    --container-padding: 0.75rem;
+    --element-gap: 0.5rem;
+  }
+}
+
+/* Mobile médio (480px+) */
+@media screen and (min-width: 30rem) {
+  :root {
+    --container-padding: 1rem;
+    --element-gap: 0.75rem;
+  }
+}
+
+/* Tablet pequeno (768px+) */
+@media screen and (min-width: 48rem) {
+  :root {
+    --container-padding: 1.5rem;
+    --element-gap: 1rem;
+  }
+}
+
+/* Tablet grande (1024px+) */
+@media screen and (min-width: 64rem) {
+  :root {
+    --container-padding: 2rem;
+    --element-gap: 1.5rem;
+  }
+}
+
+/* Desktop (1200px+) */
+@media screen and (min-width: 75rem) {
+  :root {
+    --container-padding: 2.5rem;
+    --element-gap: 2rem;
+  }
+}
+
+/* ===== LAYOUTS FLEXÍVEIS COM CSS GRID E FLEXBOX ===== */
+.container {
+  width: 100%;
+  max-width: min(100vw, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--container-padding, 1rem);
+  
+  /* CSS Grid responsivo */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--element-gap, 1rem);
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--element-gap, 1rem);
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== ELEMENTOS TOUCH-FRIENDLY ===== */
+button, .btn, a[role="button"] {
+  /* Tamanho mínimo para touch (44px) */
+  min-height: 44px;
+  min-width: 44px;
+  padding: clamp(0.5rem, calc(0.4rem + 0.5vw), 1rem) clamp(1rem, calc(0.8rem + 1vw), 2rem);
+  
+  /* Espaçamento entre elementos touch */
+  margin: 0.25rem;
+  
+  /* Performance e acessibilidade */
+  touch-action: manipulation;
+  cursor: pointer;
+  border: none;
+  border-radius: clamp(0.25rem, calc(0.2rem + 0.2vw), 0.5rem);
+  
+  /* Transições suaves */
+  transition: all 0.2s ease-out;
+  
+  /* Feedback visual */
+  &:hover, &:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Links touch-friendly */
+a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-out;
+}
+
+/* ===== IMAGENS E MÍDIA RESPONSIVAS ===== */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: clamp(0.25rem, calc(0.2rem + 0.3vw), 0.75rem);
+}
+
+/* Lazy loading otimizado */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* ===== CORREÇÕES ESPECÍFICAS PARA MOBILE ===== */
+@media screen and (max-width: 768px) {
+  
+  /* Força elementos a respeitarem a largura da tela */
+  * {
+    max-width: 100vw !important;
+    overflow-x: hidden;
+  }
+  
+  /* Containers principais */
+  body, html, #root, .App {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+  
+  /* Navegação mobile */
+  .nav-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+  }
+  
+  /* Carrossel mobile otimizado */
+  .carousel-container {
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .carousel-slide {
+    scroll-snap-align: center;
+    width: calc(100vw - 2rem);
+    max-width: 95vw;
+    margin: 0 auto;
+  }
+  
+  /* Modais mobile */
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    margin: 0;
+  }
+}
+
+/* ===== OTIMIZAÇÕES PARA TABLETS ===== */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  
+  /* Layout híbrido para tablets */
+  .tablet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* Navegação tablet */
+  .nav-tablet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+  
+  /* Carrossel tablet */
+  .carousel-slide {
+    width: calc(50vw - 1rem);
+    max-width: 500px;
+  }
+}
+
+/* ===== UNIDADES VIEWPORT MODERNAS ===== */
+.full-height {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height */
+}
+
+.full-width {
+  width: 100vw;
+  width: 100dvw; /* Dynamic viewport width */
+}
+
+/* Container com altura mínima dinâmica */
+.min-height-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ===== ACESSIBILIDADE E ZOOM ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Suporte para zoom até 200% */
+@media screen and (min-resolution: 2dppx) {
+  body {
+    font-size: clamp(1rem, calc(0.9rem + 0.5vw), 1.25rem);
+  }
+}
+
+/* ===== PERFORMANCE E OTIMIZAÇÃO ===== */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Preload crítico */
+.critical-resource {
+  font-display: swap;
+  loading: eager;
+}
+
+/* ===== DARK MODE E PREFERÊNCIAS ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --accent-color: #fcc201;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --accent-color: #ff4d4d;
+  }
+}
+
+/* ===== CORREÇÃO FINAL ANTI-OVERFLOW ===== */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+* {
+  min-width: 0;
+}
+
+*:not(html):not(body) {
+  max-width: 100%;
+}

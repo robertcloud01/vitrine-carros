@@ -104,7 +104,7 @@ export const useVehicles = () => {
                   price: 'R$ 480.000',
                   category: 'Pickup',
                   image: '/assets/images/2025-ram-1500.webp',
-                  video: null
+                  video: '/assets/videos/ram-1500-video.mp4'
                 }
               ]
             });

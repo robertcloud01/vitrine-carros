@@ -1,0 +1,188 @@
+/* ===== CORREÇÃO DEFINITIVA PARA OVERFLOW HORIZONTAL NO MOBILE ===== */
+
+/* Reset global para prevenir overflow horizontal */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container principal da aplicação */
+.App {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
+}
+
+/* Correções específicas para mobile - REMOVENDO !important excessivos */
+@media (max-width: 768px) {
+  
+  /* Containers principais */
+  body, html, #root, .App {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  /* Correção para elementos com largura fixa */
+  [style*="width: 800px"],
+  [style*="width: 300px"] {
+    width: 100%;
+    max-width: 95vw;
+  }
+  
+  /* Correção específica para o carrossel */
+  .carousel-container,
+  .carousel-track,
+  .carousel-slide {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  /* Correção para navegação mobile */
+  .nav {
+    max-width: 100vw;
+  }
+  
+  /* Correção para imagens */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Correção para vídeos */
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Correção para botões de navegação */
+  .navigation-button {
+    position: absolute;
+    z-index: 10;
+  }
+  
+  /* Correção para modais */
+  .modal,
+  .video-modal {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+/* Correções específicas para mobile pequeno */
+@media (max-width: 480px) {
+  
+  /* Reduz ainda mais as margens e paddings */
+  * {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Containers com padding zero nas laterais */
+  .container,
+  .carousel-container,
+  .header-container {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+  
+  /* Botões de navegação mais próximos da borda */
+  .navigation-button[style*="left"] {
+    left: 5px !important;
+  }
+  
+  .navigation-button[style*="right"] {
+    right: 5px !important;
+  }
+}
+
+/* Correções específicas para mobile muito pequeno */
+@media (max-width: 360px) {
+  
+  /* Padding mínimo */
+  .container,
+  .carousel-container,
+  .header-container {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+  
+  /* Botões de navegação na borda */
+  .navigation-button[style*="left"] {
+    left: 2px !important;
+  }
+  
+  .navigation-button[style*="right"] {
+    right: 2px !important;
+  }
+  
+  /* Texto menor para evitar overflow */
+  h1, h2, h3 {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+  }
+}
+
+/* Correção para elementos que podem causar scroll horizontal */
+.carousel-slide,
+.vehicle-card,
+.modal-content {
+  transform: none !important;
+  left: auto !important;
+  right: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Correção para animações que podem causar overflow */
+@media (max-width: 768px) {
+  .carousel-slide {
+    transform: translateX(0) !important;
+  }
+  
+  /* Desabilita animações que podem causar overflow */
+  .carousel-slide[style*="transform"] {
+    transform: none !important;
+  }
+}
+
+/* Correção para elementos com position fixed */
+.contact-button-container,
+.video-modal,
+.details-modal {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* Força scroll vertical apenas */
+body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Correção para flexbox que pode causar overflow */
+.nav-list,
+.carousel-track,
+.slide-content {
+  flex-wrap: wrap !important;
+  overflow-x: hidden !important;
+}
+
+/* Correção final - força tudo a ficar dentro da tela */
+@media (max-width: 768px) {
+  * {
+    min-width: 0 !important;
+  }
+  
+  *:not(html):not(body) {
+    max-width: 100vw !important;
+  }
+}

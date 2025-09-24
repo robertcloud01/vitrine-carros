@@ -6,8 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #0a0a0a;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  /* CORREÇÃO: Removendo opacity: 0 que estava causando tela branca */
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
 body.loaded {

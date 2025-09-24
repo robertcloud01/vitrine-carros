@@ -7,21 +7,18 @@ const SalesTeam = () => {
     {
       id: 1,
       name: 'Carlos Silva',
-      role: 'Especialista em Carros Esportivos',
       phone: '5511999999999',
       image: '/assets/images/vendedor1.jpg'
     },
     {
       id: 2,
       name: 'Ana Santos',
-      role: 'Consultora de Veículos Premium',
       phone: '5511888888888',
       image: '/assets/images/vendedor2.jpg'
     },
     {
       id: 3,
       name: 'Roberto Costa',
-      role: 'Especialista em SUVs',
       phone: '5511777777777',
       image: '/assets/images/vendedor3.jpg'
     }
