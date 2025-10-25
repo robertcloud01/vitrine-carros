@@ -1,0 +1,189 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  favorites Vehicle[] @relation("UserFavorites")
+  inquiries Inquiry[]
+  testDrives TestDrive[]
+
+  @@map("users")
+}
+
+model Vehicle {
+  id           String   @id @default(cuid())
+  brand        String
+  model        String
+  version      String?
+  year         Int
+  price        Float
+  mileage      Int
+  fuel         FuelType
+  transmission TransmissionType
+  color        String?
+  location     String
+  description  String?
+  videoUrl     String?
+  status       VehicleStatus @default(AVAILABLE)
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relacionamentos
+  images       VehicleImage[]
+  features     VehicleFeature[]
+  highlights   VehicleHighlight[]
+  favoritedBy  User[] @relation("UserFavorites")
+  inquiries    Inquiry[]
+  testDrives   TestDrive[]
+
+  @@map("vehicles")
+}
+
+model VehicleImage {
+  id        String  @id @default(cuid())
+  url       String
+  alt       String?
+  order     Int     @default(0)
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("vehicle_images")
+}
+
+model VehicleFeature {
+  id        String  @id @default(cuid())
+  name      String
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("vehicle_features")
+}
+
+model VehicleHighlight {
+  id        String  @id @default(cuid())
+  name      String
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("vehicle_highlights")
+}
+
+model Inquiry {
+  id        String      @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  type      InquiryType @default(GENERAL)
+  status    InquiryStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  // Relacionamentos
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  vehicleId String?
+  vehicle   Vehicle? @relation(fields: [vehicleId], references: [id])
+
+  @@map("inquiries")
+}
+
+model TestDrive {
+  id            String         @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  preferredDate DateTime
+  message       String?
+  status        TestDriveStatus @default(PENDING)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  // Relacionamentos
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  vehicleId String
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+
+  @@map("test_drives")
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("newsletter")
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+  MANAGER
+}
+
+enum FuelType {
+  gasoline
+  ethanol
+  flex
+  diesel
+  electric
+  hybrid
+}
+
+enum TransmissionType {
+  manual
+  automatic
+  cvt
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  SOLD
+  RESERVED
+  MAINTENANCE
+}
+
+enum InquiryType {
+  GENERAL
+  VEHICLE_INFO
+  FINANCING
+  TRADE_IN
+  SERVICE
+}
+
+enum InquiryStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TestDriveStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
