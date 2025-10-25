@@ -1081,7 +1081,7 @@ export default function VehicleDetailPage() {
             )}
 
             {/* Technical Specifications */}
-            {vehicle && 'technical' in vehicle && vehicle.technical && (
+            {vehicle && 'technical' in vehicle && (vehicle as any).technical && (
               <div className="mb-8">
                 <h3 className="text-lg font-semibold text-primary-white mb-4">
                   Especificações Técnicas
@@ -1089,23 +1089,23 @@ export default function VehicleDetailPage() {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-gray-700">
                     <span className="text-gray-400">Tração</span>
-                    <span className="text-primary-white">{vehicle.technical.drivetrain}</span>
+                    <span className="text-primary-white">{(vehicle as any).technical.drivetrain}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-700">
                     <span className="text-gray-400">Suspensão</span>
-                    <span className="text-primary-white">{vehicle.technical.suspension}</span>
+                    <span className="text-primary-white">{(vehicle as any).technical.suspension}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-700">
                     <span className="text-gray-400">Freios</span>
-                    <span className="text-primary-white">{vehicle.technical.brakes}</span>
+                    <span className="text-primary-white">{(vehicle as any).technical.brakes}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-700">
                     <span className="text-gray-400">Rodas</span>
-                    <span className="text-primary-white">{vehicle.technical.wheels}</span>
+                    <span className="text-primary-white">{(vehicle as any).technical.wheels}</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
                     <span className="text-gray-400">Pneus</span>
-                    <span className="text-primary-white">{vehicle.technical.tires}</span>
+                    <span className="text-primary-white">{(vehicle as any).technical.tires}</span>
                   </div>
                 </div>
               </div>
