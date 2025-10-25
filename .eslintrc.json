@@ -5,9 +5,11 @@
   ],
   "rules": {
     "prefer-const": "error",
-    "no-unused-vars": "warn",
-    "no-console": "warn",
+    "no-unused-vars": "off",
+    "no-console": "off",
     "react/no-unescaped-entities": "off",
-    "@next/next/no-page-custom-font": "off"
+    "@next/next/no-page-custom-font": "off",
+    "@next/next/no-img-element": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }

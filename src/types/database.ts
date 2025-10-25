@@ -138,7 +138,15 @@ export interface PaginatedResponse<T> {
 }
 
 // Re-exportar tipos do Prisma
-export {
+export type {
+  User,
+  Vehicle,
+  VehicleImage,
+  VehicleFeature,
+  VehicleHighlight,
+  Inquiry,
+  TestDrive,
+  Newsletter,
   Role,
   FuelType,
   TransmissionType,

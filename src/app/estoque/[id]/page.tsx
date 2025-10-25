@@ -1081,7 +1081,7 @@ export default function VehicleDetailPage() {
             )}
 
             {/* Technical Specifications */}
-            {vehicle.technical && (
+            {vehicle && 'technical' in vehicle && vehicle.technical && (
               <div className="mb-8">
                 <h3 className="text-lg font-semibold text-primary-white mb-4">
                   Especificações Técnicas
@@ -1117,25 +1117,25 @@ export default function VehicleDetailPage() {
                 Informações do Veículo
               </h3>
               <div className="grid grid-cols-2 gap-4">
-                {vehicle.bodyType && (
+                {isVehicle(vehicle) && vehicle.bodyType && (
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-sm text-gray-400 mb-1">Tipo</div>
                     <div className="text-primary-white font-medium">{vehicle.bodyType}</div>
                   </div>
                 )}
-                {typeof vehicle.doors === 'number' && (
+                {isVehicle(vehicle) && typeof vehicle.doors === 'number' && (
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-sm text-gray-400 mb-1">Portas</div>
                     <div className="text-primary-white font-medium">{vehicle.doors}</div>
                   </div>
                 )}
-                {typeof vehicle.seats === 'number' && (
+                {isVehicle(vehicle) && typeof vehicle.seats === 'number' && (
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-sm text-gray-400 mb-1">Lugares</div>
                     <div className="text-primary-white font-medium">{vehicle.seats}</div>
                   </div>
                 )}
-                {vehicle.color && (
+                {isVehicle(vehicle) && vehicle.color && (
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-sm text-gray-400 mb-1">Cor Externa</div>
                     <div className="text-primary-white font-medium">
@@ -1157,7 +1157,7 @@ export default function VehicleDetailPage() {
             </div>
 
             {/* Safety Features */}
-            {vehicle.safety && vehicle.safety.length > 0 && (
+            {isVehicle(vehicle) && vehicle.safety && vehicle.safety.length > 0 && (
               <div className="mb-8">
                 <h3 className="text-lg font-semibold text-primary-white mb-4">
                   Segurança
@@ -1174,7 +1174,7 @@ export default function VehicleDetailPage() {
             )}
 
             {/* Comfort Features */}
-            {vehicle.comfort && vehicle.comfort.length > 0 && (
+            {isVehicle(vehicle) && vehicle.comfort && vehicle.comfort.length > 0 && (
               <div className="mb-8">
                 <h3 className="text-lg font-semibold text-primary-white mb-4">
                   Conforto
@@ -1191,7 +1191,7 @@ export default function VehicleDetailPage() {
             )}
 
             {/* Technology Features */}
-            {vehicle.technology && vehicle.technology.length > 0 && (
+            {isVehicle(vehicle) && vehicle.technology && vehicle.technology.length > 0 && (
               <div className="mb-8">
                 <h3 className="text-lg font-semibold text-primary-white mb-4">
                   Tecnologia
@@ -1216,7 +1216,9 @@ export default function VehicleDetailPage() {
                 {vehicle.features.map((feature, index) => (
                   <div key={index} className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-primary-gold rounded-full"></div>
-                    <span className="text-gray-400">{feature}</span>
+                    <span className="text-gray-400">
+                      {typeof feature === 'string' ? feature : feature.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -1228,13 +1230,13 @@ export default function VehicleDetailPage() {
                 Histórico do Veículo
               </h3>
               <div className="space-y-3">
-                {vehicle.owners && (
+                {isVehicle(vehicle) && vehicle.owners && (
                   <div className="flex justify-between items-center py-2 border-b border-gray-700">
                     <span className="text-gray-400">Proprietários</span>
                     <span className="text-primary-white">{vehicle.owners}</span>
                   </div>
                 )}
-                {vehicle.accidents !== undefined && (
+                {isVehicle(vehicle) && vehicle.accidents !== undefined && (
                   <div className="flex justify-between items-center py-2 border-b border-gray-700">
                     <span className="text-gray-400">Acidentes</span>
                     <span className={vehicle.accidents ? "text-red-400" : "text-green-400"}>
@@ -1242,7 +1244,7 @@ export default function VehicleDetailPage() {
                     </span>
                   </div>
                 )}
-                {vehicle.maintenance?.serviceHistory !== undefined && (
+                {isVehicle(vehicle) && vehicle.maintenance?.serviceHistory !== undefined && (
                   <div className="flex justify-between items-center py-2">
                     <span className="text-gray-400">Histórico de Revisões</span>
                     <span className={vehicle.maintenance.serviceHistory ? "text-green-400" : "text-red-400"}>
@@ -1254,7 +1256,7 @@ export default function VehicleDetailPage() {
             </div>
 
             {/* Documentation */}
-            {vehicle.documentation && (
+            {isVehicle(vehicle) && vehicle.documentation && (
               <div className="mb-8">
                 <h3 className="text-lg font-semibold text-primary-white mb-4">
                   Documentação

@@ -122,7 +122,7 @@ export default function EstoquePage() {
     const sourceRaw: any[] = (data?.data as any) || [];
     const source: Vehicle[] = sourceRaw.map(normalizeVehicle);
 
-    let filtered = source.filter(vehicle => {
+    const filtered = source.filter(vehicle => {
       // Search filter
       if (filters.search) {
         const searchTerm = filters.search.toLowerCase();
@@ -257,7 +257,7 @@ export default function EstoquePage() {
                   <Select
                     options={sortOptions}
                     value={sortBy}
-                    onChange={setSortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
                     className="w-48"
                   />
 
@@ -309,7 +309,6 @@ export default function EstoquePage() {
                   >
                     <VehicleCard
                       vehicle={vehicle}
-                      viewMode={viewMode}
                     />
                   </motion.div>
                 ))}

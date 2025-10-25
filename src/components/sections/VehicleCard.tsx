@@ -133,7 +133,7 @@ export default function VehicleCard({
           <img
             src={mainImage}
             alt={`${vehicle.brand} ${vehicle.model}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
             onError={(e) => {
               console.error('Erro ao carregar imagem:', mainImage);
@@ -178,42 +178,47 @@ export default function VehicleCard({
         )}
         
         {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
         
         {/* Action buttons on hover */}
-        <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-6 right-6 flex flex-col gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
           <button
             onClick={(e) => { e.stopPropagation(); handleFavorite(); }}
-            className="p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-all"
+            className="p-3 bg-black/60 backdrop-blur-md rounded-full hover:bg-primary-gold/20 hover:border-primary-gold/50 border border-white/20 transition-all duration-300 hover:scale-110"
           >
             {isFavorited ? (
-              <HeartSolidIcon className="h-4 w-4 text-red-500" />
+              <HeartSolidIcon className="h-5 w-5 text-red-500" />
             ) : (
-              <HeartIcon className="h-4 w-4 text-white" />
+              <HeartIcon className="h-5 w-5 text-white" />
             )}
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); handleShare(); }}
-            className="p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-all"
+            className="p-3 bg-black/60 backdrop-blur-md rounded-full hover:bg-primary-gold/20 hover:border-primary-gold/50 border border-white/20 transition-all duration-300 hover:scale-110"
           >
-            <ShareIcon className="h-4 w-4 text-white" />
+            <ShareIcon className="h-5 w-5 text-white" />
           </button>
         </div>
 
-        {/* Highlights badges */}
+        {/* Premium highlights badges */}
         {vehicle.highlights && vehicle.highlights.length > 0 && (
-          <div className="absolute top-4 left-4 flex flex-col gap-2">
+          <div className="absolute top-6 left-6 flex flex-col gap-2">
             {vehicle.highlights.slice(0, 2).map((highlight, index) => (
-              <Badge key={index} variant="success" size="sm" className="bg-primary-gold/90 text-black font-semibold">
+              <Badge 
+                key={index} 
+                variant="success" 
+                size="sm" 
+                className="bg-gradient-to-r from-primary-gold to-yellow-400 text-black font-bold px-3 py-1 shadow-lg border border-primary-gold/30 backdrop-blur-sm"
+              >
                 {highlight}
               </Badge>
             ))}
           </div>
         )}
 
-        {/* Price badge */}
-        <div className="absolute bottom-4 right-4">
-          <div className="bg-primary-gold text-black px-4 py-2 rounded-full font-bold text-lg shadow-lg">
+        {/* Luxury price badge */}
+        <div className="absolute bottom-6 right-6">
+          <div className="bg-gradient-to-r from-primary-gold via-yellow-400 to-primary-gold text-black px-6 py-3 rounded-2xl font-bold text-xl shadow-2xl border border-primary-gold/50 backdrop-blur-sm transform group-hover:scale-105 transition-transform duration-300">
             {formatPrice(vehicle.price)}
           </div>
         </div>
@@ -221,33 +226,47 @@ export default function VehicleCard({
 
       {/* Content */}
       <div className="p-6">
-        {/* Vehicle Title */}
-        <div className="mb-4">
-          <h3 className="text-xl font-bold text-primary-white mb-1 group-hover:text-primary-gold transition-colors">
+        {/* Highlights */}
+        {vehicle.highlights && vehicle.highlights.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {vehicle.highlights.slice(0, 2).map((highlight, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 bg-primary-gold/20 text-primary-gold text-xs font-medium rounded-full border border-primary-gold/30"
+              >
+                {highlight}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Price Badge */}
+        <div className="flex justify-between items-start mb-4">
+          <div className="bg-gradient-to-r from-primary-gold to-yellow-500 text-black px-4 py-2 rounded-lg font-bold text-lg shadow-lg">
+            {formatPrice(vehicle.price)}
+          </div>
+        </div>
+
+        {/* Vehicle Info */}
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold text-white group-hover:text-primary-gold transition-colors duration-300">
             {vehicle.brand} {vehicle.model}
           </h3>
+          
           {vehicle.version && (
-            <p className="text-primary-gray text-sm">{vehicle.version}</p>
+            <p className="text-gray-300 text-sm font-medium">
+              {vehicle.version}
+            </p>
           )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3">
-          <Link href={`/estoque/${vehicle.id}`} className="flex-1">
-            <button className="w-full bg-primary-gold hover:bg-primary-gold/90 text-black font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-primary-gold/30 group/btn">
-              <span className="inline-flex items-center justify-center gap-2">
-                <EyeIcon className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                Ver Detalhes
-              </span>
+        {/* Action Button */}
+        <div className="mt-6">
+          <Link href={`/estoque/${vehicle.id}`} className="block">
+            <button className="w-full bg-primary-gold hover:bg-yellow-500 text-black font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              Ver Detalhes
             </button>
           </Link>
-          
-          <button
-            onClick={handleContact}
-            className="bg-transparent border-2 border-primary-gold text-primary-gold hover:bg-primary-gold hover:text-black font-semibold py-3 px-4 rounded-lg transition-all duration-200"
-          >
-            💬
-          </button>
         </div>
       </div>
 

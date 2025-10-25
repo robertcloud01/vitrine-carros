@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User, CreateUserData, UserRole } from '@/types/database';
+import { User, CreateUserData, Role } from '@/types/database';
 
 // Função para inicializar o usuário admin
 const initializeAdminUser = async (): Promise<User> => {
@@ -10,14 +10,10 @@ const initializeAdminUser = async (): Promise<User> => {
     id: '1',
     name: 'Administrador',
     email: 'admin@vitrinelux.com', // Corrigido para coincidir com o seed
-    phone: '(11) 99999-9999',
     password: adminPassword,
-    role: 'ADMIN' as UserRole,
+    role: 'ADMIN' as Role,
     createdAt: new Date(),
     updatedAt: new Date(),
-    favorites: [],
-    inquiries: [],
-    testDrives: [],
   };
 };
 
@@ -50,16 +46,12 @@ export class UserService {
       // Criar novo usuário
       const newUser: User = {
         id: (mockUsers.length + 1).toString(),
-        name: data.name,
+        name: data.name || null,
         email: data.email,
-        phone: data.phone,
         password: hashedPassword,
         role: data.role || 'USER',
         createdAt: new Date(),
         updatedAt: new Date(),
-        favorites: [],
-        inquiries: [],
-        testDrives: [],
       };
       
       mockUsers.push(newUser);
@@ -210,7 +202,7 @@ export class UserService {
     }
   }
 
-  static async getUsersByRole(role: UserRole): Promise<User[]> {
+  static async getUsersByRole(role: Role): Promise<User[]> {
     try {
       // Garantir que os dados mock estão inicializados
       await initializeMockData();

@@ -61,7 +61,14 @@ export default function FinanciamentoPage() {
     installments: '48'
   });
 
-  const [simulationResult, setSimulationResult] = useState(null);
+  const [simulationResult, setSimulationResult] = useState<{
+    vehicleValue: number;
+    downPayment: number;
+    financedAmount: number;
+    installments: number;
+    monthlyPayment: number;
+    totalAmount: number;
+  } | null>(null);
 
   const handleSimulation = (e: React.FormEvent) => {
     e.preventDefault();

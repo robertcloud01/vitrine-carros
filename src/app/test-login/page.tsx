@@ -26,7 +26,7 @@ export default function TestLoginPage() {
       setResult(response);
     } catch (error) {
       console.error('❌ Erro no teste de login:', error);
-      setResult({ error: error.message });
+      setResult({ error: error instanceof Error ? error.message : 'Erro desconhecido' });
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,7 @@ export default function TestLoginPage() {
       setResult({ api: data, status: response.status });
     } catch (error) {
       console.error('❌ Erro no teste da API:', error);
-      setResult({ error: error.message });
+      setResult({ error: error instanceof Error ? error.message : 'Erro desconhecido' });
     } finally {
       setLoading(false);
     }

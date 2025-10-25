@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     
     // Enviar email de boas-vindas
     try {
-      await EmailService.sendWelcomeEmail(user.email, user.name);
+      await EmailService.sendWelcomeEmail(user.email, user.name || 'Usuário');
       console.log('✅ Email de boas-vindas enviado para:', user.email);
     } catch (emailError) {
       console.error('❌ Erro ao enviar email de boas-vindas:', emailError);

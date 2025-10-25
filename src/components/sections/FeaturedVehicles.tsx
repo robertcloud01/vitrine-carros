@@ -214,7 +214,9 @@ export default function FeaturedVehicles() {
   const { data: vehicles, loading, error } = useFeaturedVehicles(10);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [progress, setProgress] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const progressRef = useRef<NodeJS.Timeout | null>(null);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
 
   // Usar diretamente os veículos retornados pelo hook (já são "featured")
@@ -222,22 +224,45 @@ export default function FeaturedVehicles() {
     return vehicles || [];
   }, [vehicles]);
 
-  // Auto-play do carrossel
+  // Auto-play do carrossel com barra de progresso
   useEffect(() => {
-    if (!isAutoPlaying || featuredVehicles.length <= 1) return;
+    if (!isAutoPlaying || featuredVehicles.length <= 1) {
+      setProgress(0);
+      return;
+    }
 
+    // Reset progress
+    setProgress(0);
+    
+    // Progress animation
+    const progressDuration = 6000; // 6 segundos
+    const progressStep = 100 / (progressDuration / 50); // Update every 50ms
+    
+    progressRef.current = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          return 0;
+        }
+        return prev + progressStep;
+      });
+    }, 50);
+
+    // Main carousel interval
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % featuredVehicles.length);
-    }, 4000); // Reduzido para 4 segundos
+      setProgress(0);
+    }, progressDuration);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
+      if (progressRef.current) clearInterval(progressRef.current);
     };
-  }, [isAutoPlaying, featuredVehicles.length]);
+  }, [isAutoPlaying, featuredVehicles.length, currentIndex]);
 
   // Pausar auto-play quando hover no carrossel
   const handleMouseEnter = () => {
     setIsAutoPlaying(false);
+    if (progressRef.current) clearInterval(progressRef.current);
   };
 
   const handleMouseLeave = () => {
@@ -268,11 +293,13 @@ export default function FeaturedVehicles() {
   const handlePrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + featuredVehicles.length) % featuredVehicles.length);
     setIsAutoPlaying(false);
+    setProgress(0);
   };
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % featuredVehicles.length);
     setIsAutoPlaying(false);
+    setProgress(0);
   };
 
   if (loading) {
@@ -371,7 +398,7 @@ export default function FeaturedVehicles() {
             </motion.div>
           </div>
 
-          {/* Indicadores */}
+          {/* Indicadores com barra de progresso */}
           {featuredVehicles.length > 1 && (
             <div className="flex justify-center gap-2 mt-8">
               {featuredVehicles.map((_, index) => (
@@ -380,14 +407,48 @@ export default function FeaturedVehicles() {
                   onClick={() => {
                     setCurrentIndex(index);
                     setIsAutoPlaying(false);
+                    setProgress(0);
                   }}
-                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                  className={`relative w-12 h-3 rounded-full transition-all duration-200 overflow-hidden ${
                     index === currentIndex
-                      ? 'bg-primary-gold scale-125'
-                      : 'bg-primary-gold/30 hover:bg-primary-gold/60'
+                      ? 'bg-primary-gold/30'
+                      : 'bg-primary-gold/20 hover:bg-primary-gold/40'
                   }`}
-                />
+                >
+                  {/* Barra de progresso apenas no slide ativo */}
+                  {index === currentIndex && isAutoPlaying && (
+                    <div 
+                      className="absolute top-0 left-0 h-full bg-primary-gold transition-all duration-75 ease-linear"
+                      style={{ width: `${progress}%` }}
+                    />
+                  )}
+                  {/* Indicador fixo */}
+                  <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full ${
+                    index === currentIndex ? 'bg-primary-gold' : 'bg-primary-gold/60'
+                  }`} />
+                </button>
               ))}
+            </div>
+          )}
+
+          {/* Indicador de auto-play */}
+          {featuredVehicles.length > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-4">
+              <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                isAutoPlaying ? 'bg-primary-gold animate-pulse' : 'bg-primary-gold/30'
+              }`} />
+              <span className="text-xs text-primary-gray">
+                {isAutoPlaying ? 'Reprodução automática ativa' : 'Reprodução pausada'}
+              </span>
+              <button
+                onClick={() => {
+                  setIsAutoPlaying(!isAutoPlaying);
+                  setProgress(0);
+                }}
+                className="text-xs text-primary-gold hover:text-primary-gold/80 underline ml-2"
+              >
+                {isAutoPlaying ? 'Pausar' : 'Retomar'}
+              </button>
             </div>
           )}
         </div>
